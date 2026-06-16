@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Trivia Mundialista ⚽</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Oswald:wght@700&display=swap" rel="stylesheet" />
+ <style>
+ *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ :root {
+ --blue-dark: #042C53; --blue-main: #185FA5; --blue-mid: #378ADD; --blue-light: #E6F1FB;
+ --gold: #EF9F27; --gold-light: #FAEEDA; --green-main: #3B6D11; --green-light: #EAF3DE;
+ --red-main: #A32D2D; --red-light: #FCEBEB; --gray-bg: #F4F6FA; --gray-card: #FFFFFF;
+ --gray-border: rgba(0,0,0,0.1); --text-main: #0D1B2A; --text-muted: #5A6A7A;
+ --radius: 12px; --radius-sm: 8px;
+ }
+ body { font-family: 'Inter', sans-serif; background: var(--gray-bg); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 0 0 3rem; }
+ .hero { width: 100%; background: var(--blue-dark); position: relative; overflow: hidden; padding: 2.5rem 1.5rem 3.5rem; text-align: center; }
+ .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(55,138,221,0.18) 0%, transparent 55%), radial-gradient(circle at 80% 30%, rgba(239,159,39,0.12) 0%, transparent 50%); }
+ .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(239,159,39,0.18); border: 1px solid rgba(239,159,39,0.35); color: var(--gold); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 1rem; position: relative; }
+ .hero h1 { font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 700; color: #fff; letter-spacing: 0.02em; line-height: 1.1; position: relative; }
+ .hero h1 span { color: var(--gold); }
+ .hero p { color: rgba(255,255,255,0.65); font-size: 14px; margin-top: 8px; position: relative; }
+ .ball-deco { position: absolute; font-size: 8rem; opacity: 0.04; user-select: none; pointer-events: none; }
+ .ball-deco.left { left: -2rem; top: -1rem; transform: rotate(-20deg); }
+ .ball-deco.right { right: -2rem; bottom: -2rem; transform: rotate(30deg); }
+ .scoreboard { width: 100%; max-width: 600px; background: var(--blue-main); display: flex; justify-content: space-around; padding: 14px 24px; border-bottom: 3px solid var(--gold); }
+ .score-item { text-align: center; color: #fff; }
+ .score-item .val { font-size: 1.75rem; font-weight: 700; line-height: 1; }
+ .score-item .lbl { font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+ .progress-track { width: 100%; max-width: 600px; height: 5px; background: rgba(0,0,0,0.12); }
+ .progress-fill { height: 5px; background: var(--gold); transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+ .card { width: 100%; max-width: 600px; background: var(--gray-card); border-radius: 0 0 var(--radius) var(--radius); border: 1px solid var(--gray-border); border-top: none; padding: 1.75rem 1.5rem 1.5rem; position: relative; }
+ .q-label { font-size: 11px; font-weight: 600; color: var(--blue-main); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+ .q-text { font-size: 17px; font-weight: 600; color: var(--text-main); line-height: 1.5; margin-bottom: 1.25rem; }
+ .options { display: flex; flex-direction: column; gap: 10px; }
+ .opt { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--gray-border); background: #fff; color: var(--text-main); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; text-align: left; width: 100%; }
+ .opt:hover:not(:disabled) { border-color: var(--blue-mid); background: var(--blue-light); color: var(--blue-dark); }
+ .opt-letter { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: var(--gray-bg); color: var(--text-muted); border: 1px solid var(--gray-border); transition: all 0.15s; }
+ .opt:hover:not(:disabled) .opt-letter { background: var(--blue-main); color: #fff; border-color: transparent; }
+ .opt.correct { background: var(--green-light); border-color: var(--green-main); color: var(--green-main); }
+ .opt.correct .opt-letter { background: var(--green-main); color: #fff; border-color: transparent; }
+ .opt.wrong { background: var(--red-light); border-color: var(--red-main); color: var(--red-main); }
+ .opt.wrong .opt-letter { background: var(--red-main); color: #fff; border-color: transparent; }
+ .opt:disabled { cursor: default; }
+ .feedback { margin-top: 1rem; padding: 12px 16px; border-radius: var(--radius-sm); font-size: 13px; line-height: 1.6; display: none; }
+ .feedback.show { display: block; }
+ .feedback.correct { background: var(--green-light); color: var(--green-main); border: 1px solid #97C459; }
+ .feedback.wrong { background: var(--red-light); color: var(--red-main); border: 1px solid #F09595; }
+ .btn-next { width: 100%; margin-top: 1.25rem; padding: 14px; border-radius: var(--radius-sm); background: var(--blue-main); color: #fff; font-size: 15px; font-weight: 600; border: none; cursor: pointer; letter-spacing: 0.01em; transition: background 0.15s, transform 0.1s; display: none; }
+ .btn-next:hover { background: var(--blue-dark); }
+ .btn-next:active { transform: scale(0.99); }
+ .btn-next.show { display: block; }
+ .result { display: none; padding: 2rem 1.5rem; text-align: center; }
+ .result.show { display: block; }
+ .result-icon { font-size: 4rem; margin-bottom: 1rem; }
+ .result-title { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+ .result-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; }
+ .result-pts { font-size: 3.5rem; font-weight: 900; color: var(--blue-main); line-height: 1; }
+ .result-pts-lbl { font-size: 13px; color: var(--text-muted); margin-bottom: 1.5rem; }
+ .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 1.5rem; }
+ .result-stat { background: var(--gray-bg); border-radius: var(--radius-sm); padding: 14px 8px; }
+ .result-stat .n { font-size: 1.5rem; font-weight: 700; color: var(--text-main); }
+ .result-stat .l { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+ .review-list { text-align: left; margin-bottom: 1.5rem; }
+ .review-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray-border); font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+ .review-item:last-child { border-bottom: none; }
+ .review-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+ .review-q { color: var(--text-main); font-weight: 500; }
+ .review-a { margin-top: 2px; }
+ .btn-restart { width: 100%; padding: 14px; border-radius: var(--radius-sm); background: var(--blue-main); color: #fff; font-size: 15px; font-weight: 600; border: none; cursor: pointer; transition: background 0.15s; }
+ .btn-restart:hover { background: var(--blue-dark); }
+ .footer { margin-top: 1.5rem; text-align: center; font-size: 12px; color: var(--text-muted); opacity: 0.6; }
+ @media (max-width: 480px) { .hero { padding: 2rem 1rem 3rem; } .card { padding: 1.25rem 1rem 1.25rem; } }
+ </style>
+</head>
+<body>
+<div class="hero">
+ <div class="ball-deco left">⚽</div>
+ <div class="ball-deco right">🏆</div>
+ <div class="hero-badge">⚽ Copa del Mundo</div>
+ <h1>TRIVIA <span>MUNDIALISTA</span></h1>
+ <p>¿Cuánto sabes de la historia del fútbol mundial?</p>
+</div>
+<div class="scoreboard">
+ <div class="score-item"><div class="val" id="pts">0</div><div class="lbl">Puntos</div></div>
+ <div class="score-item"><div class="val" id="qnum">1/5</div><div class="lbl">Pregunta</div></div>
+ <div class="score-item"><div class="val" id="streak">0</div><div class="lbl">Racha 🔥</div></div>
+</div>
+<div class="progress-track"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+<div class="card" id="quiz-card">
+ <div id="quiz-content">
+ <div class="q-label" id="q-label">Pregunta 1 de 5</div>
+ <div class="q-text" id="q-text"></div>
+ <div class="options" id="options"></div>
+ <div class="feedback" id="feedback"></div>
+ <button class="btn-next" id="btn-next">Siguiente →</button>
+ </div>
+ <div class="result" id="result-screen">
+ <div class="result-icon" id="r-icon">🏆</div>
+ <div class="result-title" id="r-title">Resultado Final</div>
+ <div class="result-sub" id="r-sub"></div>
+ <div class="result-pts" id="r-pts">0</div>
+ <div class="result-pts-lbl">puntos totales</div>
+ <div class="result-grid">
+ <div class="result-stat"><div class="n" id="r-correct">0</div><div class="l">Correctas ✅</div></div>
+ <div class="result-stat"><div class="n" id="r-wrong">0</div><div class="l">Incorrectas ❌</div></div>
+ <div class="result-stat"><div class="n" id="r-maxstreak">0</div><div class="l">Racha máx 🔥</div></div>
+ </div>
+ <div class="review-list" id="review-list"></div>
+ <button class="btn-restart" onclick="restart()">⚽ Jugar de nuevo</button>
+ </div>
+</div>
+<div class="footer">Trivia Mundialista — Vibramente / ORION AI Strategy</div>
+<script>
+ const questions = [
+ { q: "¿Qué país ha ganado la mayor cantidad de Copas del Mundo FIFA en la historia?", opts: ["🇩🇪 Alemania", "🇦🇷 Argentina", "🇧🇷 Brasil", "🇮🇹 Italia"], correct: 2, answer: "Brasil 🇧🇷", feedback: "Brasil lidera con 5 títulos: 1958, 1962, 1970, 1994 y 2002. El único país en ganar el Mundial en tres continentes distintos." },
+ { q: "¿Qué jugador protagonizó el famoso gol conocido como 'La Mano de Dios' en el Mundial de México 1986?", opts: ["🇧🇷 Pelé", "🇫🇷 Zinedine Zidane", "🇧🇷 Ronaldo Nazário", "🇦🇷 Diego Armando Maradona"], correct: 3, answer: "Diego Armando Maradona 🇦🇷", feedback: "Maradona marcó ese polémico gol con la mano ante Inglaterra en cuartos de final. En el mismo partido también anotó el 'Gol del Siglo', elegido el mejor de la historia." },
+ { q: "¿Qué legendario jugador es el único en la historia en haber ganado tres Copas del Mundo?", opts: ["🇧🇷 Pelé", "🇩🇪 Franz Beckenbauer", "🇫🇷 Zinedine Zidane", "🇧🇷 Ronaldo Nazário"], correct: 0, answer: "Pelé 🇧🇷", feedback: "Pelé es el único tricampeón del mundo: 1958 (con tan solo 17 años), 1962 y 1970. Una hazaña irrepetible considerada la cima del fútbol de todos los tiempos." },
+ { q: "¿Qué selección ganó el Mundial de Qatar 2022 tras una final épica contra Francia que se definió en penales?", opts: ["🇫🇷 Francia", "🇧🇷 Brasil", "🇲🇦 Marruecos", "🇦🇷 Argentina"], correct: 3, answer: "Argentina 🇦🇷", feedback: "Argentina venció a Francia en una de las finales más emocionantes de la historia (3-3 en el tiempo reglamentario y prórroga), ganando 4-2 en penales con Messi como figura." },
+ { q: "¿En qué año y torneo jugó Ecuador su primer Mundial de Fútbol absoluto?", opts: ["🇫🇷 Francia 1998", "🇩🇪 Alemania 2006", "🇰🇷🇯🇵 Corea-Japón 2002", "🇿🇦 Sudáfrica 2010"], correct: 2, answer: "Corea-Japón 2002 🇪🇨", feedback: "¡La Tri debutó en el Mundial de Corea-Japón 2002! Ecuador clasificó por primera vez bajo la dirección del 'Bolillo' Gómez, marcando un hito histórico para el fútbol ecuatoriano." }
+ ];
+ let current = 0, score = 0, streak = 0, maxStreak = 0, correct = 0, wrong = 0;
+ let answered = false;
+ const history = [];
+ const letters = ['A','B','C','D'];
+ function render() {
+ const q = questions[current];
+ document.getElementById('q-label').textContent = `Pregunta ${current + 1} de ${questions.length}`;
+ document.getElementById('q-text').textContent = q.q;
+ document.getElementById('qnum').textContent = `${current + 1}/${questions.length}`;
+ document.getElementById('prog').style.width = `${(current / questions.length) * 100}%`;
+ const opts = document.getElementById('options');
+ opts.innerHTML = '';
+ q.opts.forEach((o, i) => {
+ const btn = document.createElement('button');
+ btn.className = 'opt';
+ btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${o}`;
+ btn.onclick = () => select(i);
+ opts.appendChild(btn);
+ });
+ const fb = document.getElementById('feedback');
+ fb.className = 'feedback';
+ fb.textContent = '';
+ document.getElementById('btn-next').className = 'btn-next';
+ answered = false;
+ }
+ function select(idx) {
+ if (answered) return;
+ answered = true;
+ const q = questions[current];
+ const btns = document.querySelectorAll('.opt');
+ const fb = document.getElementById('feedback');
+ btns.forEach((b, i) => {
+ b.disabled = true;
+ if (i === q.correct) b.classList.add('correct');
+ else if (i === idx && i !== q.correct) b.classList.add('wrong');
+ });
+ const isCorrect = idx === q.correct;
+ if (isCorrect) {
+ streak++; correct++;
+ if (streak > maxStreak) maxStreak = streak;
+ const bonus = streak >= 3 ? 20 : streak >= 2 ? 15 : 10;
+ score += bonus;
+ document.getElementById('pts').textContent = score;
+ document.getElementById('streak').textContent = streak;
+ fb.className = 'feedback correct show';
+ const prefix = streak >= 3 ? `🔥 ¡Racha de ${streak}! +${bonus} pts — ` : streak >= 2 ? `⚡ ¡Racha! +${bonus} pts — ` : `✅ ¡Correcto! +${bonus} pts — `;
+ fb.textContent = prefix + q.feedback;
+ } else {
+ streak = 0; wrong++;
+ document.getElementById('streak').textContent = 0;
+ fb.className = 'feedback wrong show';
+ fb.textContent = '❌ Incorrecto — ' + q.feedback;
+ }
+ history.push({ q: q.q, answer: q.answer, correct: isCorrect });
+ const btn = document.getElementById('btn-next');
+ btn.className = 'btn-next show';
+ btn.textContent = current < questions.length - 1 ? 'Siguiente pregunta →' : 'Ver mi resultado 🏆';
+ }
+ document.getElementById('btn-next').onclick = () => {
+ current++;
+ if (current >= questions.length) showResult();
+ else render();
+ };
+ function showResult() {
+ document.getElementById('prog').style.width = '100%';
+ document.getElementById('quiz-content').style.display = 'none';
+ const rs = document.getElementById('result-screen');
+ rs.className = 'result show';
+ document.getElementById('r-pts').textContent = score;
+ document.getElementById('r-correct').textContent = correct;
+ document.getElementById('r-wrong').textContent = wrong;
+ document.getElementById('r-maxstreak').textContent = maxStreak;
+ let icon, title, sub;
+ if (correct === 5) { icon='🏆'; title='¡CAMPEÓN DEL MUNDO!'; sub='Perfecto. Eres un verdadero crack de la historia mundialista.'; }
+ else if (correct >= 4) { icon='🥇'; title='¡SOBRESALIENTE!'; sub='Casi perfecto. Nivel de comentarista deportivo de élite.'; }
+ else if (correct >= 3) { icon='🥈'; title='¡MUY BIEN!'; sub='Buen conocimiento mundialista. ¡Sigue entrenando!'; }
+ else if (correct >= 2) { icon='🥉'; title='EN DESARROLLO'; sub='Puedes mejorar. ¡Vuelve a intentarlo y sube tu nivel!'; }
+ else { icon='⚽'; title='¡A ENTRENAR!'; sub='El conocimiento se construye con práctica. ¡Tú puedes!'; }
+ document.getElementById('r-icon').textContent = icon;
+ document.getElementById('r-title').textContent = title;
+ document.getElementById('r-sub').textContent = sub;
+ const reviewList = document.getElementById('review-list');
+ reviewList.innerHTML = history.map(h =>
+ `<div class="review-item"><span class="review-icon">${h.correct ? '✅' : '❌'}</span><div><div class="review-q">${h.q}</div><div class="review-a">Respuesta: <strong>${h.answer}</strong></div></div></div>`
+ ).join('');
+ }
+ function restart() {
+ current = 0; score = 0; streak = 0; maxStreak = 0; correct = 0; wrong = 0;
+ history.length = 0;
+ document.getElementById('pts').textContent = 0;
+ document.getElementById('streak').textContent = 0;
+ document.getElementById('quiz-content').style.display = 'block';
+ document.getElementById('result-screen').className = 'result';
+ render();
+ }
+ render();
+</script>
+</body>
+</html>
