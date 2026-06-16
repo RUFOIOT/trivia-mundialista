@@ -7,17 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --blue:#042C53;--blue-main:#185FA5;--blue-mid:#378ADD;--blue-light:#E6F1FB;
-  --gold:#EF9F27;--gold-light:#FAEEDA;
-  --red:#C0392B;--red-light:#FCEBEB;
-  --green:#27AE60;--green-light:#EAF3DE;
-  --gray:#F4F6FA;--border:rgba(0,0,0,0.1);--text:#0D1B2A;--muted:#5A6A7A;
-  --radius:12px;--radius-sm:8px;
-}
+:root{--blue:#042C53;--blue-main:#185FA5;--blue-mid:#378ADD;--blue-light:#E6F1FB;--gold:#EF9F27;--gold-light:#FAEEDA;--red:#C0392B;--red-light:#FCEBEB;--green:#27AE60;--green-light:#EAF3DE;--gray:#F4F6FA;--border:rgba(0,0,0,0.1);--text:#0D1B2A;--muted:#5A6A7A;--radius:12px;--radius-sm:8px}
 body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padding:0}
-
-/* TOP BAR */
 .topbar{background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;position:sticky;top:0;z-index:100}
 .topbar-left{display:flex;align-items:center;gap:12px}
 .logo-small{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.05em}
@@ -25,45 +16,35 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
 .round-badge{background:rgba(239,159,39,0.2);color:var(--gold);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase}
 .topbar-right{display:flex;align-items:center;gap:10px}
 .back-link{color:rgba(255,255,255,0.6);font-size:12px;text-decoration:none;padding:6px 12px;border:1px solid rgba(255,255,255,0.15);border-radius:6px}
-.back-link:hover{color:#fff}
-
-/* SCOREBOARD */
+.conn-pill{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,0.5)}
+.conn-dot{width:7px;height:7px;border-radius:50%;background:#555}
+.conn-dot.online{background:#27AE60} .conn-dot.offline{background:#E74C3C}
 .scoreboard{background:var(--blue-main);display:flex;border-bottom:3px solid var(--gold)}
-.team-score{flex:1;padding:16px 20px;text-align:center;position:relative}
+.team-score{flex:1;padding:16px 20px;text-align:center}
 .team-score.team-a{border-right:1px solid rgba(255,255,255,0.1)}
 .team-name{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:#fff;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;gap:8px}
 .team-pts{font-size:2.8rem;font-weight:700;color:#fff;line-height:1;margin:4px 0}
 .team-pts.winning{color:var(--gold)}
 .team-streak{font-size:11px;color:rgba(255,255,255,0.6);margin-top:2px}
 .vs-divider{display:flex;align-items:center;justify-content:center;padding:0 16px;color:rgba(255,255,255,0.4);font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700}
-
-/* TIMER */
 .timer-bar{background:var(--blue);display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px}
 .timer-display{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;color:#fff;min-width:60px;text-align:center;transition:color .3s}
-.timer-display.warning{color:var(--gold)}
-.timer-display.danger{color:#E74C3C}
+.timer-display.warning{color:var(--gold)} .timer-display.danger{color:#E74C3C}
 .timer-track{flex:1;max-width:300px;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden}
 .timer-fill{height:6px;background:var(--gold);border-radius:3px;transition:width .9s linear,background .3s}
-.timer-fill.warning{background:var(--gold)}
-.timer-fill.danger{background:#E74C3C}
+.timer-fill.warning{background:var(--gold)} .timer-fill.danger{background:#E74C3C}
 .ctrl-btns{display:flex;gap:8px}
 .ctrl-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s}
 .ctrl-btn:hover{background:rgba(255,255,255,0.2)}
 .ctrl-btn.start{background:var(--green);border-color:var(--green)}
 .ctrl-btn.danger{background:#C0392B;border-color:#C0392B}
-
-/* MAIN GRID */
 .main{display:grid;grid-template-columns:1fr 340px;gap:16px;padding:16px;max-width:1100px;margin:0 auto}
-
-/* QUESTION PANEL */
 .panel{background:#fff;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
 .panel-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .panel-title{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
 .q-counter{font-size:11px;color:var(--blue-main);font-weight:600;background:var(--blue-light);padding:3px 10px;border-radius:20px}
-
 .progress-track{height:4px;background:var(--gray)}
 .progress-fill{height:4px;background:var(--gold);transition:width .5s ease}
-
 .q-body{padding:18px}
 .q-ronda{font-size:10px;font-weight:700;color:var(--blue-main);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 .q-text{font-size:16px;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:16px}
@@ -75,29 +56,20 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
 .opt-row.is-correct{background:var(--green-light);border-color:var(--green);color:#1A5E30}
 .opt-letter{width:24px;height:24px;border-radius:50%;background:var(--gray);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0}
 .opt-row.is-correct .opt-letter{background:var(--green);color:#fff}
-
-/* NAV BUTTONS */
 .nav-row{display:flex;gap:10px}
 .nav-btn{flex:1;padding:11px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
-.nav-btn.prev{background:var(--gray);color:var(--muted)}
-.nav-btn.prev:hover{background:#e0e3e9}
-.nav-btn.next{background:var(--blue-main);color:#fff}
-.nav-btn.next:hover{background:var(--blue)}
+.nav-btn.prev{background:var(--gray);color:var(--muted)} .nav-btn.prev:hover{background:#e0e3e9}
+.nav-btn.next{background:var(--blue-main);color:#fff} .nav-btn.next:hover{background:var(--blue)}
 .nav-btn:disabled{opacity:.4;cursor:default}
-.reveal-btn{width:100%;margin-bottom:10px;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer;letter-spacing:.02em}
+.reveal-btn{width:100%;margin-bottom:10px;padding:10px;border-radius:var(--radius-sm);background:var(--gold);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}
 .reveal-btn:hover{background:#d4880e}
-
-/* SIDEBAR */
 .sidebar{display:flex;flex-direction:column;gap:12px}
-
-/* BUZZERS */
-.buzzer-panel .panel-head{background:#fff}
 .buzzer-status{padding:14px}
 .buz-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--border);margin-bottom:8px;transition:all .2s}
-.buz-row.winner{border-color:var(--gold);background:var(--gold-light)}
-.buz-row.loser{opacity:.5}
-.buz-row.waiting{background:var(--gray)}
-.buz-dot{width:14px;height:14px;border-radius:50%;background:var(--border);flex-shrink:0}
+.buz-row.winner-row{border-color:var(--gold);background:var(--gold-light)}
+.buz-row.loser-row{opacity:.5}
+.buz-row.waiting-row{background:var(--gray)}
+.buz-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
 .buz-row.team-a .buz-dot{background:#C0392B}
 .buz-row.team-b .buz-dot{background:var(--blue-main)}
 .buz-info{flex:1}
@@ -105,39 +77,29 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
 .buz-time{font-size:11px;color:var(--muted)}
 .buz-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:10px}
 .buz-badge.first{background:var(--gold);color:#fff}
-.buz-badge.waiting-badge{background:var(--gray);color:var(--muted)}
-
+.buz-badge.waiting-b{background:var(--gray);color:var(--muted)}
 .judge-row{display:flex;gap:8px;padding:0 14px 14px}
 .judge-btn{flex:1;padding:10px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .15s}
-.judge-btn.correct{background:var(--green);color:#fff}
-.judge-btn.correct:hover{background:#219150}
-.judge-btn.wrong{background:var(--red);color:#fff}
-.judge-btn.wrong:hover{background:#a52019}
+.judge-btn.correct{background:var(--green);color:#fff} .judge-btn.correct:hover{background:#219150}
+.judge-btn.wrong{background:var(--red);color:#fff} .judge-btn.wrong:hover{background:#a52019}
 .judge-btn:disabled{opacity:.3;cursor:default}
-
-/* HISTORY */
 .history-list{padding:0 14px 14px;display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto}
 .hist-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;background:var(--gray);font-size:12px}
 .hist-icon{flex-shrink:0;font-size:14px}
 .hist-info{flex:1;line-height:1.4}
-.hist-q{font-weight:600;color:var(--text)}
-.hist-detail{color:var(--muted)}
+.hist-q{font-weight:600;color:var(--text)} .hist-detail{color:var(--muted)}
 .hist-pts{font-weight:700;font-size:13px}
-.hist-pts.pos{color:var(--green)}
-.hist-pts.neg{color:var(--red)}
-
-/* ROUND badge */
-.round-header{background:var(--blue);color:#fff;text-align:center;padding:8px;font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.1em}
+.hist-pts.pos{color:var(--green)} .hist-pts.neg{color:var(--red)}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="topbar-left">
     <div class="logo-small">TRIVIA <span>MUNDIALISTA</span></div>
     <div class="round-badge">🎮 Dashboard</div>
   </div>
   <div class="topbar-right">
+    <div class="conn-pill"><div class="conn-dot" id="conn-dot"></div><span id="conn-text">Conectando...</span></div>
     <a href="index.html" class="back-link">← Inicio</a>
   </div>
 </div>
@@ -165,20 +127,19 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
 </div>
 
 <div class="main">
-  <!-- LEFT: QUESTION -->
   <div>
     <div class="panel">
       <div class="panel-head">
-        <div class="panel-title" id="round-label">Ronda 1 — Preguntas Abiertas</div>
+        <div class="panel-title" id="round-label">Ronda 1</div>
         <div class="q-counter" id="q-counter">1 / 10</div>
       </div>
       <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
       <div class="q-body">
         <div class="q-ronda" id="q-ronda-tag"></div>
-        <div class="q-text" id="q-text">Cargando pregunta...</div>
+        <div class="q-text" id="q-text">Cargando...</div>
         <div class="q-answer" id="q-answer">✅ Respuesta correcta: <span id="q-answer-text"></span></div>
         <div class="opts-list" id="opts-list"></div>
-        <button class="reveal-btn" id="reveal-btn" onclick="revealAnswer()">👁 Mostrar respuesta</button>
+        <button class="reveal-btn" onclick="revealAnswer()">👁 Mostrar respuesta</button>
         <div class="nav-row">
           <button class="nav-btn prev" id="btn-prev" onclick="prevQ()">← Anterior</button>
           <button class="nav-btn next" id="btn-next" onclick="nextQ()">Siguiente →</button>
@@ -187,30 +148,22 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
     </div>
   </div>
 
-  <!-- RIGHT: SIDEBAR -->
   <div class="sidebar">
-    <!-- BUZZERS -->
-    <div class="panel buzzer-panel">
+    <div class="panel">
       <div class="panel-head">
         <div class="panel-title">⚡ Pulsadores</div>
         <div class="q-counter" id="buzz-status-label">Esperando...</div>
       </div>
       <div class="buzzer-status">
-        <div class="buz-row waiting team-a" id="buz-a">
+        <div class="buz-row waiting-row team-a" id="buz-a">
           <div class="buz-dot"></div>
-          <div class="buz-info">
-            <div class="buz-name">Equipo A 🔴</div>
-            <div class="buz-time" id="buz-time-a">—</div>
-          </div>
-          <div class="buz-badge waiting-badge" id="buz-badge-a">Listo</div>
+          <div class="buz-info"><div class="buz-name">Equipo A 🔴</div><div class="buz-time" id="buz-time-a">—</div></div>
+          <div class="buz-badge waiting-b" id="buz-badge-a">Listo</div>
         </div>
-        <div class="buz-row waiting team-b" id="buz-b">
+        <div class="buz-row waiting-row team-b" id="buz-b">
           <div class="buz-dot"></div>
-          <div class="buz-info">
-            <div class="buz-name">Equipo B 🔵</div>
-            <div class="buz-time" id="buz-time-b">—</div>
-          </div>
-          <div class="buz-badge waiting-badge" id="buz-badge-b">Listo</div>
+          <div class="buz-info"><div class="buz-name">Equipo B 🔵</div><div class="buz-time" id="buz-time-b">—</div></div>
+          <div class="buz-badge waiting-b" id="buz-badge-b">Listo</div>
         </div>
       </div>
       <div class="judge-row">
@@ -218,249 +171,170 @@ body{font-family:'Inter',sans-serif;background:var(--gray);min-height:100vh;padd
         <button class="judge-btn wrong" id="judge-wrong" onclick="judge(false)" disabled>❌ Incorrecto</button>
       </div>
     </div>
-
-    <!-- HISTORY -->
     <div class="panel">
       <div class="panel-head">
         <div class="panel-title">📋 Historial</div>
-        <button style="background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer" onclick="clearHistory()">Limpiar</button>
+        <button style="background:none;border:none;font-size:11px;color:var(--muted);cursor:pointer" onclick="localHistory=[];renderHistory()">Limpiar</button>
       </div>
-      <div class="history-list" id="history-list">
-        <div style="font-size:12px;color:var(--muted);text-align:center;padding:1rem">Sin historial aún</div>
-      </div>
+      <div class="history-list" id="history-list"><div style="font-size:12px;color:var(--muted);text-align:center;padding:1rem">Sin historial aún</div></div>
     </div>
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="config.js"></script>
 <script>
-const TIMER_SEC = 30;
-const POINTS = {correct:10, streak2:15, streak3:20, wrong:0};
-
-const rounds = [
-  {
-    name: "Ronda 1 — Preguntas Abiertas",
-    tag: "RONDA 1",
-    questions: [
-      {q:"¿Qué país ha ganado la mayor cantidad de Copas del Mundo FIFA en la historia?", answer:"Brasil", type:"open", feedback:"Brasil: 1958, 1962, 1970, 1994 y 2002 — 5 títulos"},
-      {q:"¿Qué jugador protagonizó el famoso gol conocido como 'La Mano de Dios' en el Mundial de México 1986?", answer:"Diego Armando Maradona", type:"open", feedback:"Cuartos de final vs. Inglaterra. También marcó el 'Gol del Siglo' en ese mismo partido."},
-      {q:"¿Qué legendario jugador es el único en la historia en haber ganado tres Copas del Mundo?", answer:"Pelé", type:"open", feedback:"1958, 1962 y 1970 — con 17 años ganó el primero."},
-      {q:"¿Qué selección ganó el Mundial de Qatar 2022 tras una final épica contra Francia en penales?", answer:"Argentina", type:"open", feedback:"3-3 en tiempo reglamentario + prórroga, luego 4-2 en penales."},
-      {q:"¿En qué año y torneo jugó Ecuador su primer Mundial de Fútbol absoluto?", answer:"Corea-Japón 2002", type:"open", feedback:"Ecuador clasificó bajo la dirección del 'Bolillo' Gómez."},
-    ]
-  },
-  {
-    name: "Ronda 2 — Opción Múltiple",
-    tag: "RONDA 2",
-    questions: [
-      {q:"¿En qué ciudad se disputó la final del Mundial 2014?", answer:"Río de Janeiro (Maracaná)", type:"multi", opts:["Buenos Aires","São Paulo","Río de Janeiro","Brasilia"], correct:2, feedback:"Alemania venció 1-0 a Argentina con gol de Götze en tiempo extra."},
-      {q:"¿Quién es el máximo goleador en la historia de los Mundiales?", answer:"Miroslav Klose (16 goles)", type:"multi", opts:["Pelé","Ronaldo Nazário","Gerd Müller","Miroslav Klose"], correct:3, feedback:"Klose anotó 16 goles en 4 Mundiales: 2002, 2006, 2010 y 2014."},
-      {q:"¿Cuántos equipos participaron en el Mundial de Qatar 2022?", answer:"32 equipos", type:"multi", opts:["24","36","32","48"], correct:2, feedback:"Fue el último con 32 equipos; el de 2026 (USA-México-Canadá) tendrá 48."},
-      {q:"¿Qué país organizó el primer Mundial de Fútbol de la historia en 1930?", answer:"Uruguay", type:"multi", opts:["Brasil","Italia","Uruguay","Argentina"], correct:2, feedback:"Uruguay ganó ese primer Mundial en casa, el 30 de julio de 1930."},
-      {q:"¿Cómo se llama el trofeo que se entrega al campeón del mundo desde 1974?", answer:"Trofeo FIFA Copa del Mundo", type:"multi", opts:["Copa Jules Rimet","Trofeo FIFA Copa del Mundo","Copa Intercontinental","Balón de Oro"], correct:1, feedback:"Reemplazó a la Copa Jules Rimet tras el Mundial de Alemania 1974."},
-    ]
-  }
+const rounds=[
+  {name:"Ronda 1 — Preguntas Abiertas",tag:"RONDA 1",questions:[
+    {q:"¿Qué país ha ganado la mayor cantidad de Copas del Mundo FIFA en la historia?",answer:"Brasil",type:"open",feedback:"Brasil: 1958, 1962, 1970, 1994 y 2002 — 5 títulos"},
+    {q:"¿Qué jugador protagonizó el famoso gol 'La Mano de Dios' en el Mundial de México 1986?",answer:"Diego Armando Maradona",type:"open",feedback:"Cuartos de final vs. Inglaterra. También anotó el 'Gol del Siglo' ese mismo partido."},
+    {q:"¿Qué legendario jugador es el único en la historia en ganar tres Copas del Mundo?",answer:"Pelé",type:"open",feedback:"1958, 1962 y 1970 — debutó con solo 17 años."},
+    {q:"¿Qué selección ganó el Mundial de Qatar 2022 tras una final épica contra Francia en penales?",answer:"Argentina",type:"open",feedback:"3-3 en tiempo reglamentario, 4-2 en penales. Messi campeón del mundo."},
+    {q:"¿En qué año y torneo jugó Ecuador su primer Mundial de Fútbol absoluto?",answer:"Corea-Japón 2002",type:"open",feedback:"La Tri clasificó bajo la dirección del 'Bolillo' Gómez."},
+  ]},
+  {name:"Ronda 2 — Opción Múltiple",tag:"RONDA 2",questions:[
+    {q:"¿En qué ciudad se disputó la final del Mundial 2014?",answer:"Río de Janeiro (Maracaná)",type:"multi",opts:["Buenos Aires","São Paulo","Río de Janeiro","Brasilia"],correct:2,feedback:"Alemania 1-0 Argentina. Gol de Götze en prórroga."},
+    {q:"¿Quién es el máximo goleador en la historia de los Mundiales?",answer:"Miroslav Klose (16 goles)",type:"multi",opts:["Pelé","Ronaldo Nazário","Gerd Müller","Miroslav Klose"],correct:3,feedback:"Klose: 16 goles en 4 Mundiales (2002-2014)."},
+    {q:"¿Cuántos equipos participaron en el Mundial de Qatar 2022?",answer:"32 equipos",type:"multi",opts:["24","36","32","48"],correct:2,feedback:"Último con 32 equipos. USA-México-Canadá 2026 tendrá 48."},
+    {q:"¿Qué país organizó el primer Mundial de Fútbol de la historia en 1930?",answer:"Uruguay",type:"multi",opts:["Brasil","Italia","Uruguay","Argentina"],correct:2,feedback:"Uruguay ganó en casa el 30 de julio de 1930."},
+    {q:"¿Cómo se llama el trofeo que se entrega al campeón del mundo desde 1974?",answer:"Trofeo FIFA Copa del Mundo",type:"multi",opts:["Copa Jules Rimet","Trofeo FIFA Copa del Mundo","Copa Intercontinental","Balón de Oro"],correct:1,feedback:"Reemplazó a la Copa Jules Rimet en 1974."},
+  ]}
 ];
+const allQ=[];
+rounds.forEach(r=>r.questions.forEach(q=>allQ.push({...q,roundName:r.name,roundTag:r.tag})));
+const letters=['A','B','C','D'];
+const TIMER_SEC=30;
+const POINTS={correct:10,streak2:15,streak3:20};
+const DEFAULT={currentQ:0,timerValue:TIMER_SEC,timerRunning:false,buzzA:null,buzzB:null,winner:null,ptsA:0,ptsB:0,streakA:0,streakB:0,revealed:false,judged:false};
 
-let allQuestions = [];
-rounds.forEach(r => r.questions.forEach(q => allQuestions.push({...q, roundName:r.name, roundTag:r.tag})));
+// ── FIREBASE ──────────────────────────────────────────────
+firebase.initializeApp(window.FIREBASE_CONFIG);
+const db=firebase.database();
+const STATE=db.ref('trivia/game');
+let gs={...DEFAULT};
+let timerTick=null;
+let localHistory=[];
 
-let current = 0;
-let state = {ptsA:0, ptsB:0, streakA:0, streakB:0, buzzA:null, buzzB:null, winner:null};
-let history = [];
-let timerInterval = null, timeLeft = TIMER_SEC;
-let answered = false;
+db.ref('.info/connected').on('value',s=>{
+  const on=s.val();
+  document.getElementById('conn-dot').className='conn-dot '+(on?'online':'offline');
+  document.getElementById('conn-text').textContent=on?'Firebase ✓':'Reconectando...';
+});
 
-function saveState(){
-  localStorage.setItem('triviaState', JSON.stringify({...state, currentQ:current, answered}));
-}
+STATE.on('value',snap=>{
+  const data=snap.val();
+  if(!data){STATE.set(DEFAULT);return;}
+  gs={...DEFAULT,...data};
 
-function loadState(){
-  const s = localStorage.getItem('triviaState');
-  if(s){const p=JSON.parse(s);state.ptsA=p.ptsA||0;state.ptsB=p.ptsB||0;state.streakA=p.streakA||0;state.streakB=p.streakB||0;}
-}
-
-function renderQ(){
-  const q = allQuestions[current];
-  document.getElementById('q-ronda-tag').textContent = q.roundTag + ' — ' + (q.type==='open'?'Abierta':'Opción múltiple');
-  document.getElementById('q-text').textContent = q.q;
-  document.getElementById('q-answer').classList.remove('show');
-  document.getElementById('q-answer-text').textContent = q.answer + (q.feedback ? ' — '+q.feedback : '');
-  document.getElementById('q-counter').textContent = `${current+1} / ${allQuestions.length}`;
-  document.getElementById('prog').style.width = `${((current)/allQuestions.length)*100}%`;
-
-  const roundIdx = rounds.findIndex(r=>r.name===q.roundName);
-  document.getElementById('round-label').textContent = q.roundName;
-
-  const opts = document.getElementById('opts-list');
-  opts.innerHTML = '';
-  if(q.type==='multi' && q.opts){
-    const letters=['A','B','C','D'];
-    q.opts.forEach((o,i)=>{
-      const row=document.createElement('div');
-      row.className='opt-row'+(i===q.correct?' is-correct':'');
-      row.innerHTML=`<div class="opt-letter">${letters[i]}</div>${o}${i===q.correct?' ✅':''}`;
-      opts.appendChild(row);
-    });
+  // Determinar ganador cuando hay buzz(es)
+  if(!gs.winner&&(gs.buzzA!==null||gs.buzzB!==null)){
+    let w=null;
+    if(gs.buzzA!==null&&gs.buzzB!==null) w=gs.buzzA>=gs.buzzB?'A':'B';
+    else w=gs.buzzA!==null?'A':'B';
+    STATE.update({winner:w});
+    gs.winner=w;
   }
 
-  document.getElementById('btn-prev').disabled = current===0;
-  document.getElementById('btn-next').textContent = current<allQuestions.length-1?'Siguiente →':'Fin';
-  document.getElementById('btn-next').disabled = false;
-  answered = false;
-  resetBuzzers();
-  resetTimer();
-  updateScoreboard();
-  saveState();
+  // Sincronizar timer local
+  if(gs.timerRunning&&!timerTick) timerTick=setInterval(tickTimer,1000);
+  else if(!gs.timerRunning&&timerTick){clearInterval(timerTick);timerTick=null;}
+
+  renderAll();
+});
+
+function tickTimer(){
+  const nv=gs.timerValue-1;
+  if(nv<=0){clearInterval(timerTick);timerTick=null;STATE.update({timerValue:0,timerRunning:false});}
+  else STATE.update({timerValue:nv});
 }
 
-function revealAnswer(){
-  document.getElementById('q-answer').classList.add('show');
-}
-
+function startTimer(){if(gs.timerRunning)return;STATE.update({timerRunning:true});}
+function stopTimer(){if(timerTick){clearInterval(timerTick);timerTick=null;}STATE.update({timerRunning:false});}
+function resetTimer(){if(timerTick){clearInterval(timerTick);timerTick=null;}STATE.update({timerValue:TIMER_SEC,timerRunning:false});}
+function revealAnswer(){STATE.update({revealed:true});}
 function nextQ(){
-  if(current<allQuestions.length-1){current++;renderQ();}
+  if(timerTick){clearInterval(timerTick);timerTick=null;}
+  STATE.update({currentQ:Math.min(gs.currentQ+1,allQ.length-1),timerValue:TIMER_SEC,timerRunning:false,buzzA:null,buzzB:null,winner:null,revealed:false,judged:false});
 }
 function prevQ(){
-  if(current>0){current--;renderQ();}
-}
-
-// ── TIMER ──
-function startTimer(){
-  if(timerInterval) return;
-  updateTimerDisplay();
-  timerInterval = setInterval(()=>{
-    timeLeft--;
-    updateTimerDisplay();
-    if(timeLeft<=0){clearInterval(timerInterval);timerInterval=null;onTimerEnd();}
-  },1000);
-}
-function stopTimer(){clearInterval(timerInterval);timerInterval=null;}
-function resetTimer(){stopTimer();timeLeft=TIMER_SEC;updateTimerDisplay();}
-function onTimerEnd(){
-  document.getElementById('timer-display').textContent='⏰';
-  document.getElementById('timer-fill').style.width='0%';
-}
-function updateTimerDisplay(){
-  const el=document.getElementById('timer-display');
-  const fill=document.getElementById('timer-fill');
-  el.textContent=timeLeft;
-  fill.style.width=`${(timeLeft/TIMER_SEC)*100}%`;
-  el.className='timer-display'+(timeLeft<=10?' danger':timeLeft<=20?' warning':'');
-  fill.className='timer-fill'+(timeLeft<=10?' danger':timeLeft<=20?' warning':'');
-  localStorage.setItem('timerVal',timeLeft);
-}
-
-// ── BUZZERS ──
-function resetBuzzers(){
-  state.buzzA=null; state.buzzB=null; state.winner=null;
-  renderBuzzers();
-}
-function renderBuzzers(){
-  const hasWinner = state.winner!==null;
-  const rowA=document.getElementById('buz-a');
-  const rowB=document.getElementById('buz-b');
-  rowA.className='buz-row team-a'+(state.winner==='A'?' winner':state.winner==='B'?' loser':' waiting');
-  rowB.className='buz-row team-b'+(state.winner==='B'?' winner':state.winner==='A'?' loser':' waiting');
-  document.getElementById('buz-badge-a').textContent=state.winner==='A'?'1°':state.buzzA?'Buzzeó':'Listo';
-  document.getElementById('buz-badge-a').className='buz-badge'+(state.winner==='A'?' first':' waiting-badge');
-  document.getElementById('buz-badge-b').textContent=state.winner==='B'?'1°':state.buzzB?'Buzzeó':'Listo';
-  document.getElementById('buz-badge-b').className='buz-badge'+(state.winner==='B'?' first':' waiting-badge');
-  document.getElementById('buz-time-a').textContent=state.buzzA?`Tiempo restante: ${state.buzzA}s`:'—';
-  document.getElementById('buz-time-b').textContent=state.buzzB?`Tiempo restante: ${state.buzzB}s`:'—';
-  document.getElementById('buzz-status-label').textContent=hasWinner?`Responde Equipo ${state.winner}`:'Esperando...';
-  const canJudge=hasWinner && !answered;
-  document.getElementById('judge-correct').disabled=!canJudge;
-  document.getElementById('judge-wrong').disabled=!canJudge;
+  if(timerTick){clearInterval(timerTick);timerTick=null;}
+  STATE.update({currentQ:Math.max(gs.currentQ-1,0),timerValue:TIMER_SEC,timerRunning:false,buzzA:null,buzzB:null,winner:null,revealed:false,judged:false});
 }
 
 function judge(isCorrect){
-  if(!state.winner || answered) return;
-  answered=true;
-  stopTimer();
-  const team=state.winner;
-  const q=allQuestions[current];
+  if(!gs.winner||gs.judged)return;
+  const team=gs.winner,q=allQ[gs.currentQ];
+  const patch={judged:true,revealed:true};
   let pts=0;
   if(isCorrect){
-    if(team==='A'){state.streakA++;state.streakB=0;const s=state.streakA;pts=s>=3?POINTS.streak3:s>=2?POINTS.streak2:POINTS.correct;state.ptsA+=pts;}
-    else{state.streakB++;state.streakA=0;const s=state.streakB;pts=s>=3?POINTS.streak3:s>=2?POINTS.streak2:POINTS.correct;state.ptsB+=pts;}
-    localStorage.setItem('score_A',state.ptsA);
-    localStorage.setItem('score_B',state.ptsB);
-    localStorage.setItem('streak_A',state.streakA);
-    localStorage.setItem('streak_B',state.streakB);
-  } else {
-    if(team==='A') state.streakA=0; else state.streakB=0;
-    localStorage.setItem('streak_A',state.streakA);
-    localStorage.setItem('streak_B',state.streakB);
-  }
-  history.unshift({q:q.q.substring(0,50)+'…', team, correct:isCorrect, pts, answer:q.answer});
-  updateScoreboard();
+    if(team==='A'){const s=(gs.streakA||0)+1;pts=s>=3?POINTS.streak3:s>=2?POINTS.streak2:POINTS.correct;patch.ptsA=(gs.ptsA||0)+pts;patch.streakA=s;patch.streakB=0;}
+    else{const s=(gs.streakB||0)+1;pts=s>=3?POINTS.streak3:s>=2?POINTS.streak2:POINTS.correct;patch.ptsB=(gs.ptsB||0)+pts;patch.streakB=s;patch.streakA=0;}
+  }else{if(team==='A')patch.streakA=0;else patch.streakB=0;}
+  STATE.update(patch);
+  localHistory.unshift({q:q.q.substring(0,50)+'…',team,correct:isCorrect,pts,answer:q.answer});
   renderHistory();
-  revealAnswer();
-  saveState();
-  document.getElementById('judge-correct').disabled=true;
-  document.getElementById('judge-wrong').disabled=true;
 }
 
-function updateScoreboard(){
-  document.getElementById('pts-a').textContent=state.ptsA;
-  document.getElementById('pts-b').textContent=state.ptsB;
-  document.getElementById('streak-a').textContent=`Racha: ${state.streakA} 🔥`;
-  document.getElementById('streak-b').textContent=`Racha: ${state.streakB} 🔥`;
-  const pA=document.getElementById('pts-a');
-  const pB=document.getElementById('pts-b');
-  pA.classList.toggle('winning',state.ptsA>state.ptsB);
-  pB.classList.toggle('winning',state.ptsB>state.ptsA);
+function renderAll(){renderQ();renderTimer();renderScoreboard();renderBuzzers();}
+
+function renderQ(){
+  const q=allQ[gs.currentQ];
+  document.getElementById('q-ronda-tag').textContent=q.roundTag+' — '+(q.type==='open'?'Abierta':'Opción múltiple');
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('q-counter').textContent=`${gs.currentQ+1} / ${allQ.length}`;
+  document.getElementById('prog').style.width=`${(gs.currentQ/allQ.length)*100}%`;
+  document.getElementById('round-label').textContent=q.roundName;
+  document.getElementById('q-answer-text').textContent=q.answer+(q.feedback?' — '+q.feedback:'');
+  document.getElementById('q-answer').classList.toggle('show',!!gs.revealed);
+  const opts=document.getElementById('opts-list');
+  opts.innerHTML='';
+  if(q.type==='multi'&&q.opts){
+    q.opts.forEach((o,i)=>{const row=document.createElement('div');row.className='opt-row'+(i===q.correct?' is-correct':'');row.innerHTML=`<div class="opt-letter">${letters[i]}</div>${o}${i===q.correct?' ✅':''}`;opts.appendChild(row);});
+  }
+  document.getElementById('btn-prev').disabled=gs.currentQ===0;
+  document.getElementById('btn-next').textContent=gs.currentQ<allQ.length-1?'Siguiente →':'Fin';
+}
+
+function renderTimer(){
+  const t=gs.timerValue??TIMER_SEC;
+  const el=document.getElementById('timer-display'),fill=document.getElementById('timer-fill');
+  el.textContent=t<=0?'⏰':t;
+  el.className='timer-display'+(t<=10?' danger':t<=20?' warning':'');
+  fill.style.width=`${(t/TIMER_SEC)*100}%`;
+  fill.className='timer-fill'+(t<=10?' danger':t<=20?' warning':'');
+}
+
+function renderScoreboard(){
+  document.getElementById('pts-a').textContent=gs.ptsA||0;
+  document.getElementById('pts-b').textContent=gs.ptsB||0;
+  document.getElementById('streak-a').textContent=`Racha: ${gs.streakA||0} 🔥`;
+  document.getElementById('streak-b').textContent=`Racha: ${gs.streakB||0} 🔥`;
+  document.getElementById('pts-a').classList.toggle('winning',(gs.ptsA||0)>(gs.ptsB||0));
+  document.getElementById('pts-b').classList.toggle('winning',(gs.ptsB||0)>(gs.ptsA||0));
+}
+
+function renderBuzzers(){
+  const hasW=!!gs.winner;
+  document.getElementById('buz-a').className='buz-row team-a '+(gs.winner==='A'?'winner-row':gs.winner==='B'?'loser-row':'waiting-row');
+  document.getElementById('buz-b').className='buz-row team-b '+(gs.winner==='B'?'winner-row':gs.winner==='A'?'loser-row':'waiting-row');
+  document.getElementById('buz-badge-a').textContent=gs.winner==='A'?'1°':gs.buzzA!==null?'Buzzeó':'Listo';
+  document.getElementById('buz-badge-a').className='buz-badge '+(gs.winner==='A'?'first':'waiting-b');
+  document.getElementById('buz-badge-b').textContent=gs.winner==='B'?'1°':gs.buzzB!==null?'Buzzeó':'Listo';
+  document.getElementById('buz-badge-b').className='buz-badge '+(gs.winner==='B'?'first':'waiting-b');
+  document.getElementById('buz-time-a').textContent=gs.buzzA!==null?`Con ${gs.buzzA}s restantes`:'—';
+  document.getElementById('buz-time-b').textContent=gs.buzzB!==null?`Con ${gs.buzzB}s restantes`:'—';
+  document.getElementById('buzz-status-label').textContent=hasW?`Responde Equipo ${gs.winner}`:'Esperando...';
+  const ok=hasW&&!gs.judged;
+  document.getElementById('judge-correct').disabled=!ok;
+  document.getElementById('judge-wrong').disabled=!ok;
 }
 
 function renderHistory(){
   const el=document.getElementById('history-list');
-  if(!history.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);text-align:center;padding:1rem">Sin historial aún</div>';return;}
-  el.innerHTML=history.slice(0,15).map(h=>`
-    <div class="hist-row">
-      <div class="hist-icon">${h.correct?'✅':'❌'}</div>
-      <div class="hist-info">
-        <div class="hist-q">${h.q}</div>
-        <div class="hist-detail">Equipo ${h.team} · ${h.answer}</div>
-      </div>
-      <div class="hist-pts ${h.correct?'pos':'neg'}">${h.correct?'+'+h.pts:'—'}</div>
-    </div>`).join('');
+  if(!localHistory.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);text-align:center;padding:1rem">Sin historial aún</div>';return;}
+  el.innerHTML=localHistory.slice(0,15).map(h=>`<div class="hist-row"><div class="hist-icon">${h.correct?'✅':'❌'}</div><div class="hist-info"><div class="hist-q">${h.q}</div><div class="hist-detail">Equipo ${h.team} · ${h.answer}</div></div><div class="hist-pts ${h.correct?'pos':'neg'}">${h.correct?'+'+h.pts:'—'}</div></div>`).join('');
 }
-
-function clearHistory(){history=[];renderHistory();}
-
-// ── POLL localStorage for buzzer presses from iPads ──
-function pollBuzzers(){
-  const bzA=localStorage.getItem('buzz_A');
-  const bzB=localStorage.getItem('buzz_B');
-  if(!state.winner){
-    if(bzA && !state.buzzA){
-      state.buzzA=parseInt(bzA)||timeLeft;
-      if(!bzB || parseInt(bzA)<parseInt(bzB)) state.winner='A';
-    }
-    if(bzB && !state.buzzB){
-      state.buzzB=parseInt(bzB)||timeLeft;
-      if(!bzA || parseInt(bzB)<parseInt(bzA)) state.winner='B';
-    }
-    if(state.buzzA && state.buzzB){
-      state.winner=state.buzzA>=state.buzzB?'A':'B';
-    }
-    if(state.winner) renderBuzzers();
-  }
-}
-
-// Clear buzzers when moving to new question
-function resetBuzzers(){
-  state.buzzA=null; state.buzzB=null; state.winner=null;
-  localStorage.removeItem('buzz_A');
-  localStorage.removeItem('buzz_B');
-  renderBuzzers();
-}
-
-setInterval(pollBuzzers, 200);
-
-loadState();
-renderQ();
-renderHistory();
 </script>
 </body>
 </html>
