@@ -12,28 +12,31 @@ body{font-family:'Inter',sans-serif;background:#0D1B2A;min-height:100vh;display:
 .pitch{position:fixed;inset:0;background:repeating-linear-gradient(180deg,rgba(255,255,255,0.012) 0px,rgba(255,255,255,0.012) 60px,transparent 60px,transparent 120px);pointer-events:none}
 .logo{font-family:'Oswald',sans-serif;font-size:2.8rem;font-weight:700;color:#fff;text-align:center;letter-spacing:0.03em;margin-bottom:.25rem;position:relative}
 .logo span{color:var(--gold)}
-.sub{color:rgba(255,255,255,0.5);font-size:13px;text-align:center;margin-bottom:3rem;letter-spacing:.05em;text-transform:uppercase}
+.sub{color:rgba(255,255,255,0.5);font-size:13px;text-align:center;margin-bottom:.5rem;letter-spacing:.05em;text-transform:uppercase}
+.conn-row{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:2.5rem}
+.conn-dot{width:8px;height:8px;border-radius:50%;background:#555}
+.conn-dot.online{background:#27AE60} .conn-dot.offline{background:#E74C3C}
+.conn-label{font-size:11px;color:rgba(255,255,255,0.3)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;width:100%;max-width:680px}
 .mode-card{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;cursor:pointer;text-decoration:none;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:12px}
 .mode-card:hover{background:rgba(55,138,221,0.15);border-color:rgba(55,138,221,0.5);transform:translateY(-3px)}
 .mode-card.gold{border-color:rgba(239,159,39,0.4);background:rgba(239,159,39,0.08)}
 .mode-card.gold:hover{background:rgba(239,159,39,0.18);border-color:var(--gold)}
-.mode-icon{font-size:2.5rem}
-.mode-title{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;letter-spacing:.03em}
+.mode-icon{font-size:2.5rem} .mode-title{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:#fff;letter-spacing:.03em}
 .mode-desc{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5}
 .badge{background:rgba(239,159,39,0.2);color:var(--gold);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase}
-.reset-btn{margin-top:2rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer}
-.reset-btn:hover{color:rgba(255,255,255,0.7)}
+.btn-reset{margin-top:2rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer}
+.btn-reset:hover{color:rgba(255,255,255,0.7)}
 </style>
 </head>
 <body>
 <div class="pitch"></div>
 <div class="logo">TRIVIA <span>MUNDIALISTA</span> ⚽</div>
 <div class="sub">Copa del Mundo — Concurso Interactivo</div>
+<div class="conn-row"><div class="conn-dot" id="cd"></div><span class="conn-label" id="cl">Conectando a Firebase...</span></div>
 <div class="grid">
   <a href="dashboard.html" class="mode-card gold">
-    <span class="mode-icon">🎮</span>
-    <span class="badge">Profesor</span>
+    <span class="mode-icon">🎮</span><span class="badge">Profesor</span>
     <div class="mode-title">DASHBOARD</div>
     <div class="mode-desc">Control del concurso, aprueba respuestas y maneja el marcador en tiempo real</div>
   </a>
@@ -48,6 +51,27 @@ body{font-family:'Inter',sans-serif;background:#0D1B2A;min-height:100vh;display:
     <div class="mode-desc">iPad del equipo B — Azul. Toca para responder primero</div>
   </a>
 </div>
-<button class="reset-btn" onclick="if(confirm('¿Resetear todo el concurso?')){localStorage.clear();alert('Reseteado.');}">🔄 Resetear concurso</button>
+<button class="btn-reset" onclick="resetGame()">🔄 Resetear concurso</button>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="config.js"></script>
+<script>
+const DEFAULT={currentQ:0,timerValue:30,timerRunning:false,buzzA:null,buzzB:null,winner:null,ptsA:0,ptsB:0,streakA:0,streakB:0,revealed:false,judged:false};
+let db,stateRef;
+try{
+  firebase.initializeApp(window.FIREBASE_CONFIG);
+  db=firebase.database(); stateRef=db.ref('trivia/game');
+  db.ref('.info/connected').on('value',s=>{
+    const on=s.val();
+    document.getElementById('cd').className='conn-dot '+(on?'online':'offline');
+    document.getElementById('cl').textContent=on?'Firebase conectado ✓':'Reconectando...';
+  });
+}catch(e){document.getElementById('cl').textContent='Error: configura config.js';}
+function resetGame(){
+  if(!confirm('¿Resetear todo el concurso?'))return;
+  if(stateRef)stateRef.set(DEFAULT).then(()=>alert('✅ Reseteado.'));
+  else alert('Configura config.js primero');
+}
+</script>
 </body>
 </html>
